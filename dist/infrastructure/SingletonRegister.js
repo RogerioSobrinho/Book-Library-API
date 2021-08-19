@@ -1,0 +1,10 @@
+'use strict';
+Object.defineProperty(exports, '__esModule', { value: true });
+const tslib_1 = require('tslib');
+require('reflect-metadata');
+require('./database/DatabaseRegister');
+const routingController = tslib_1.__importStar(require('routing-controllers'));
+const typedi = tslib_1.__importStar(require('typedi'));
+const typeorm = tslib_1.__importStar(require('typeorm'));
+typeorm.useContainer(typedi.Container);
+routingController.useContainer(typedi.Container);
