@@ -8,23 +8,23 @@ import { CreateBookCommand } from './CreateBookCommand';
 
 @Service()
 export class CreateBookCommandHandler
-  implements ICommandHandler<CreateBookCommand, Book>
+    implements ICommandHandler<CreateBookCommand, Book>
 {
-  @Inject('book.repository')
-  private readonly _bookRepository: IBookRepository;
+    @Inject('book.repository')
+    private readonly _bookRepository: IBookRepository;
 
-  async handle(param: CreateBookCommand): Promise<Book> {
-    const data = new Book();
-    data.author = param.author;
-    data.description = param.description;
-    data.language = param.language;
-    data.name = param.name;
-    data.publishAt = param.publishAt;
-    data.startReadAt = param.startReadAt;
-    data.finishReadAt = param.finishReadAt;
-    const book = await this._bookRepository.createGet(data);
+    async handle(param: CreateBookCommand): Promise<Book> {
+        const data = new Book();
+        data.author = param.author;
+        data.description = param.description;
+        data.language = param.language;
+        data.name = param.name;
+        data.publishAt = param.publishAt;
+        data.startReadAt = param.startReadAt;
+        data.finishReadAt = param.finishReadAt;
+        const book = await this._bookRepository.createGet(data);
 
-    if (!book) throw new SystemError(MessageError.DATA_CANNOT_SAVE, 'Book');
-    return book;
-  }
+        if (!book) throw new SystemError(MessageError.DATA_CANNOT_SAVE, 'Book');
+        return book;
+    }
 }

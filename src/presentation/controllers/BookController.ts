@@ -1,10 +1,11 @@
 import {
-  Body,
-  Controller,
-  Get,
-  Params,
-  Post,
-  UseAfter,
+    Body,
+    Controller,
+    Get,
+    NotFoundError,
+    Params,
+    Post,
+    UseAfter,
 } from 'routing-controllers';
 import { Service } from 'typedi';
 import { CreateBookCommand } from '../../core/usecases/book/commands/create-book/CreateBookCommand';
@@ -17,21 +18,24 @@ import { ErrorMiddleware } from '../middlewares/ErrorMiddleware';
 @Controller('/book')
 @UseAfter(ErrorMiddleware)
 export class BookController {
-  constructor(
-    private readonly _createBookCommandHandler: CreateBookCommandHandler,
-    private readonly _findallbookbyfilterQueryHandler: FindAllBookByFilterQueryHandler,
-  ) {}
+    constructor(
+        private readonly _createBookCommandHandler: CreateBookCommandHandler,
+        private readonly _findallbookbyfilterQueryHandler: FindAllBookByFilterQueryHandler,
+    ) {}
 
-  @Post('/')
-  async create(@Body() body: CreateBookCommand) {
-    console.log('Controller', body);
-    const result = await this._createBookCommandHandler.handle(body);
-    return result;
-  }
+    @Post('/')
+    async create(@Body() body: CreateBookCommand) {
+        console.log('Controller', body);
+        const result = await this._createBookCommandHandler.handle(body);
+        return result;
+    }
 
-  @Get('/:id([0-9])')
-  async findById(@Params() param: FindAllBookByFilterQuery) {
-    const result = await this._findallbookbyfilterQueryHandler.handle(param);
-    return result;
-  }
+    @Get('/:id([0-9a-f-]{36})')
+    async findById(@Params() param: FindAllBookByFilterQuery) {
+        const result = await this._findallbookbyfilterQueryHandler.handle(
+            param,
+        );
+        if (!result) throw new NotFoundError();
+        return result;
+    }
 }
