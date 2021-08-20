@@ -25,7 +25,6 @@ export class BookController {
 
     @Post('/')
     async create(@Body() body: CreateBookCommand) {
-        console.log('Controller', body);
         const result = await this._createBookCommandHandler.handle(body);
         return result;
     }
