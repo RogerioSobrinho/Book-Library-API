@@ -5,15 +5,16 @@ import { ICommandHandler } from '../../../../domain/common/usecases/interfaces/I
 import { Book } from '../../../../domain/entities/Book';
 import { IBookRepository } from '../../../../repositories/book/IBookRepository';
 import { CreateBookCommand } from './CreateBookCommand';
+import { CreateBookCommandResult } from './CreateBookCommandResult';
 
 @Service()
 export class CreateBookCommandHandler
-    implements ICommandHandler<CreateBookCommand, Book>
+    implements ICommandHandler<CreateBookCommand, CreateBookCommandResult>
 {
     @Inject('book.repository')
     private readonly _bookRepository: IBookRepository;
 
-    async handle(param: CreateBookCommand): Promise<Book> {
+    async handle(param: CreateBookCommand): Promise<CreateBookCommandResult> {
         const paramIsValid = param.name && param.author;
         if (!paramIsValid) {
             throw new SystemError(

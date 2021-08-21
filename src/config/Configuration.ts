@@ -8,6 +8,7 @@ export const IS_DEVELOPMENT: boolean = process.env.NODE_ENV === 'development';
 // API SERVICE
 
 export const API_PORT: number = +process.env.API_PORT ?? 8080;
+export const HOSTNAME: string = process.env.HOSTNAME ?? 'localhost';
 
 // DATABASE CONFIGURATION
 
@@ -19,3 +20,5 @@ export const DB_PORT: number = process.env.DB_PORT
 export const DB_NAME: string = process.env.DB_NAME ?? '';
 export const DB_USER: string = process.env.DB_USER ?? '';
 export const DB_PASS: string = process.env.DB_PASS ?? '';
+
+export const PROJECT_NAME: string = process.env.PROJECT_NAME ?? 'BOOKS';

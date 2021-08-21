@@ -69,9 +69,10 @@
         "pg": "^8.7.1",
         "reflect-metadata": "^0.1.13",
         "routing-controllers": "^0.9.0",
+        "routing-controllers-openapi": "^3.0.0",
+        "swagger-ui-express": "^4.1.6",
         "typedi": "^0.8.0",
         "typeorm": "^0.2.32",
-        "typeorm-typedi-extensions": "^0.2.3",
-        "winston": "^3.3.3"
+        "typeorm-typedi-extensions": "^0.2.3"
     }
 }
