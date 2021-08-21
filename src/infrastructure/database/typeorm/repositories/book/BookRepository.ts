@@ -8,21 +8,37 @@ import { BaseRepository } from '../base/BaseRepository';
 
 @Service('book.repository')
 export class BookRepository
-    extends BaseRepository<Book, BookDb, number>
+    extends BaseRepository<Book, BookDb, string>
     implements IBookRepository
 {
     constructor() {
         super(BookDb, BOOK_SCHEMA);
     }
 
-    async getByFilter(data: Book): Promise<Book[]> {
+    async getByFilter(name?: string, author?: string): Promise<Book[]> {
+        console.log(name, ' name ');
         const list = await this.repository
             .createQueryBuilder(BOOK_SCHEMA.TABLE_NAME)
+            .where(
+                name
+                    ? `${BOOK_SCHEMA.TABLE_NAME}.${BOOK_SCHEMA.COLUMNS.NAME} like :name`
+                    : '1=1',
+                {
+                    name: `%${name}%`,
+                },
+            )
+            .andWhere(
+                author
+                    ? `${BOOK_SCHEMA.TABLE_NAME}.${BOOK_SCHEMA.COLUMNS.AUTHOR} like :author`
+                    : '1=1',
+                {
+                    author: `%${author}%`,
+                },
+            )
             .orderBy(
                 `${BOOK_SCHEMA.TABLE_NAME}.${BOOK_SCHEMA.COLUMNS.NAME}`,
                 SortType.ASC,
             )
-            .whereInIds(data.id)
             .getMany();
         return list.map(item => item.toEntity());
     }

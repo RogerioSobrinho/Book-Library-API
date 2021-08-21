@@ -14,6 +14,14 @@ export class CreateBookCommandHandler
     private readonly _bookRepository: IBookRepository;
 
     async handle(param: CreateBookCommand): Promise<Book> {
+        const paramIsValid = param.name && param.author;
+        if (!paramIsValid) {
+            throw new SystemError(
+                MessageError.PARAM_IS_REQUIRED,
+                'name and author',
+            );
+        }
+
         const data = new Book();
         data.author = param.author;
         data.description = param.description;

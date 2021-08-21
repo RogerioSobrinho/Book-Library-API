@@ -1,4 +1,4 @@
 export interface IEntity {
     createdAt: Date;
-    updatedAt: Date;
+    updatedAt: Date | null;
 }

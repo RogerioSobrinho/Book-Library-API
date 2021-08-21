@@ -1,9 +1,9 @@
 export class CreateBookCommand {
     name: string;
     description: string | null;
-    author: string | null;
+    author: string;
     publishAt: Date | null;
-    language: string;
+    language: string | null;
     startReadAt: Date | null;
     finishReadAt: Date | null;
 }

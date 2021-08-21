@@ -1,12 +1,10 @@
-import { IEntity } from './IEntity';
-
-export interface IBook extends IEntity {
+export class UpdateBookCommand {
     id: string;
     name: string;
     description: string | null;
-    author: string | null;
+    author: string;
     publishAt: Date | null;
-    language: string;
+    language: string | null;
     startReadAt: Date | null;
     finishReadAt: Date | null;
 }

@@ -6,11 +6,11 @@ export class Book extends BaseEntity<IBook> implements IBook {
         super(data);
     }
 
-    public get id(): number {
+    public get id(): string {
         return this.data.id;
     }
 
-    public set id(value: number) {
+    public set id(value: string) {
         this.data.id = value;
     }
 

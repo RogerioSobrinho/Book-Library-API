@@ -34,6 +34,11 @@ export class MessageError {
         'Data cannot save!',
     );
 
+    static DATA_CANNOT_DELETE = new ErrorObject(
+        ErrorCode.DATA_CANNOT_SAVE,
+        'Data cannot delete!',
+    );
+
     static PARAM_CANNOT_UPLOAD = new ErrorObject(
         ErrorCode.DATA_CANNOT_UPLOAD,
         'The {0} cannot upload!',
@@ -47,6 +52,11 @@ export class MessageError {
     static PARAM_INCORRECT = new ErrorObject(
         ErrorCode.DATA_INCORRECT,
         'The {0} is incorrect!',
+    );
+
+    static PARAM_IS_REQUIRED = new ErrorObject(
+        ErrorCode.DATA_NOT_EXISTS,
+        'The {0} is required',
     );
 
     static PARAM_EXISTED = new ErrorObject(

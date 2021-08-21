@@ -4,25 +4,35 @@ import { SystemError } from '../../../../domain/common/exceptions/SystemError';
 import { ICommandHandler } from '../../../../domain/common/usecases/interfaces/ICommandHandler';
 import { Book } from '../../../../domain/entities/Book';
 import { IBookRepository } from '../../../../repositories/book/IBookRepository';
-import { FindAllBookByFilterQuery } from './FindAllBookByFilterQuery';
+import { UpdateBookCommand } from './UpdateBookCommand';
 
 @Service()
-export class FindAllBookByFilterQueryHandler
-    implements ICommandHandler<FindAllBookByFilterQuery, Book[]>
+export class UpdateBookCommandHandler
+    implements ICommandHandler<UpdateBookCommand, Book>
 {
     @Inject('book.repository')
     private readonly _bookRepository: IBookRepository;
 
-    async handle(param: FindAllBookByFilterQuery): Promise<Book[]> {
+    async handle(param: UpdateBookCommand): Promise<Book> {
+        const paramIsValid = param.name && param.author && param.id;
+        if (!paramIsValid) {
+            throw new SystemError(
+                MessageError.PARAM_IS_REQUIRED,
+                'id, name and author',
+            );
+        }
+
         const data = new Book();
         data.author = param.author;
         data.description = param.description;
-        data.id = param.id;
         data.language = param.language;
         data.name = param.name;
         data.publishAt = param.publishAt;
-        const books = await this._bookRepository.getByFilter(data);
-        if (!books) throw new SystemError(MessageError.DATA_NOT_FOUND, 'Book');
-        return books;
+        data.startReadAt = param.startReadAt;
+        data.finishReadAt = param.finishReadAt;
+        const book = await this._bookRepository.updateGet(param.id, data);
+
+        if (!book) throw new SystemError(MessageError.DATA_CANNOT_SAVE, 'Book');
+        return book;
     }
 }

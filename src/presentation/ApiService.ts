@@ -24,6 +24,7 @@ export class ApiService {
             controllers: [path.join(__dirname, './controllers/**/*{.js,.ts}')],
             validation: false,
             defaultErrorHandler: false,
+            classTransformer: true,
             development: IS_DEVELOPMENT,
         };
 
