@@ -6,14 +6,14 @@ import { IBookRepository } from '../../../../repositories/book/IBookRepository';
 import { DeleteBookCommand } from './DeleteBookCommand';
 
 @Service()
-export class DeleteBookCommandHandler
+export class DeleteBookCommandHandle
     implements ICommandHandler<DeleteBookCommand, boolean>
 {
     @Inject('book.repository')
     private readonly _bookRepository: IBookRepository;
 
     async handle(param: DeleteBookCommand): Promise<boolean> {
-        if (!param.id)
+        if (!param || !param.id)
             throw new SystemError(MessageError.PARAM_IS_REQUIRED, 'id');
 
         const didDelete = await this._bookRepository.delete(param.id);

@@ -8,14 +8,14 @@ import { UpdateBookCommand } from './UpdateBookCommand';
 import { UpdateBookCommandResult } from './UpdateBookCommandResult';
 
 @Service()
-export class UpdateBookCommandHandler
+export class UpdateBookCommandHandle
     implements ICommandHandler<UpdateBookCommand, UpdateBookCommandResult>
 {
     @Inject('book.repository')
     private readonly _bookRepository: IBookRepository;
 
     async handle(param: UpdateBookCommand): Promise<UpdateBookCommandResult> {
-        const paramIsValid = param.name && param.author && param.id;
+        const paramIsValid = param && param.name && param.author && param.id;
         if (!paramIsValid) {
             throw new SystemError(
                 MessageError.PARAM_IS_REQUIRED,

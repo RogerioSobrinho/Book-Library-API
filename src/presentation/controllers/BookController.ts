@@ -14,18 +14,18 @@ import {
 import { OpenAPI, ResponseSchema } from 'routing-controllers-openapi';
 import { Service } from 'typedi';
 import { CreateBookCommand } from '../../core/usecases/book/commands/create-book/CreateBookCommand';
-import { CreateBookCommandHandler } from '../../core/usecases/book/commands/create-book/CreateBookCommandHandle';
+import { CreateBookCommandHandle } from '../../core/usecases/book/commands/create-book/CreateBookCommandHandle';
 import { CreateBookCommandResult } from '../../core/usecases/book/commands/create-book/CreateBookCommandResult';
 import { DeleteBookCommand } from '../../core/usecases/book/commands/delete-book/DeleteBookCommand';
-import { DeleteBookCommandHandler } from '../../core/usecases/book/commands/delete-book/DeleteBookCommandHandle';
+import { DeleteBookCommandHandle } from '../../core/usecases/book/commands/delete-book/DeleteBookCommandHandle';
 import { UpdateBookCommand } from '../../core/usecases/book/commands/update-book/UpdateBookCommand';
-import { UpdateBookCommandHandler } from '../../core/usecases/book/commands/update-book/UpdateBookCommandHandle';
+import { UpdateBookCommandHandle } from '../../core/usecases/book/commands/update-book/UpdateBookCommandHandle';
 import { UpdateBookCommandResult } from '../../core/usecases/book/commands/update-book/UpdateBookCommandResult';
 import { FindBookByIdQuery } from '../../core/usecases/book/queries/find-book-by-id/FindBookByIdQuery';
-import { FindBookByIdQueryHandler } from '../../core/usecases/book/queries/find-book-by-id/FindBookByIdQueryHandle';
+import { FindBookByIdQueryHandle } from '../../core/usecases/book/queries/find-book-by-id/FindBookByIdQueryHandle';
 import { FindBookByIdQueryResult } from '../../core/usecases/book/queries/find-book-by-id/FindBookByIdQueryResult';
 import { FindBookByNameOrAuthorQuery } from '../../core/usecases/book/queries/find-book-by-name-or-author/FindBookByNameOrAuthorQuery';
-import { FindBookByNameOrAuthorQueryHandler } from '../../core/usecases/book/queries/find-book-by-name-or-author/FindBookByNameOrAuthorQueryHandle';
+import { FindBookByNameOrAuthorQueryHandle } from '../../core/usecases/book/queries/find-book-by-name-or-author/FindBookByNameOrAuthorQueryHandle';
 import { FindBookByNameOrAuthorQueryResult } from '../../core/usecases/book/queries/find-book-by-name-or-author/FindBookByNameOrAuthorQueryResult';
 import { ErrorMiddleware } from '../middlewares/ErrorMiddleware';
 
@@ -34,11 +34,11 @@ import { ErrorMiddleware } from '../middlewares/ErrorMiddleware';
 @UseAfter(ErrorMiddleware)
 export class BookController {
     constructor(
-        private readonly _createBookCommandHandler: CreateBookCommandHandler,
-        private readonly _updateBookCommandHandler: UpdateBookCommandHandler,
-        private readonly _findBookByIdQueryHandler: FindBookByIdQueryHandler,
-        private readonly _findBookByNameOrAuthorQueryHandler: FindBookByNameOrAuthorQueryHandler,
-        private readonly _deleteBookCommandHandler: DeleteBookCommandHandler,
+        private readonly _createBookCommandHandle: CreateBookCommandHandle,
+        private readonly _updateBookCommandHandle: UpdateBookCommandHandle,
+        private readonly _findBookByIdQueryHandle: FindBookByIdQueryHandle,
+        private readonly _findBookByNameOrAuthorQueryHandle: FindBookByNameOrAuthorQueryHandle,
+        private readonly _deleteBookCommandHandle: DeleteBookCommandHandle,
     ) {}
 
     @HttpCode(201)
@@ -57,7 +57,7 @@ export class BookController {
     async create(
         @Body() body: CreateBookCommand,
     ): Promise<CreateBookCommandResult> {
-        const result = await this._createBookCommandHandler.handle(body);
+        const result = await this._createBookCommandHandle.handle(body);
         return result;
     }
 
@@ -70,7 +70,7 @@ export class BookController {
         @Body() body: UpdateBookCommand,
     ): Promise<UpdateBookCommandResult> {
         body.id = id;
-        const result = await this._updateBookCommandHandler.handle(body);
+        const result = await this._updateBookCommandHandle.handle(body);
         return result;
     }
 
@@ -81,7 +81,7 @@ export class BookController {
     async findById(
         @Params() param: FindBookByIdQuery,
     ): Promise<FindBookByIdQueryResult> {
-        const result = await this._findBookByIdQueryHandler.handle(param);
+        const result = await this._findBookByIdQueryHandle.handle(param);
         return result;
     }
 
@@ -92,7 +92,7 @@ export class BookController {
     async findByNameOrAuthor(
         @QueryParams() param: FindBookByNameOrAuthorQuery,
     ): Promise<FindBookByNameOrAuthorQueryResult[]> {
-        const result = await this._findBookByNameOrAuthorQueryHandler.handle(
+        const result = await this._findBookByNameOrAuthorQueryHandle.handle(
             param,
         );
         return result;
@@ -103,7 +103,7 @@ export class BookController {
         description: 'Delete book.',
     })
     async delete(@Params() param: DeleteBookCommand): Promise<boolean> {
-        const didDelete = await this._deleteBookCommandHandler.handle(param);
+        const didDelete = await this._deleteBookCommandHandle.handle(param);
         return didDelete;
     }
 }

@@ -16,7 +16,6 @@ export class BookRepository
     }
 
     async getByFilter(name?: string, author?: string): Promise<Book[]> {
-        console.log(name, ' name ');
         const list = await this.repository
             .createQueryBuilder(BOOK_SCHEMA.TABLE_NAME)
             .where(

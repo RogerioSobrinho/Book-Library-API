@@ -1,12 +1,14 @@
 import { Inject, Service } from 'typedi';
+import { MessageError } from '../../../../domain/common/exceptions/message/MessageError';
 import { NoContentError } from '../../../../domain/common/exceptions/NoContentError';
+import { SystemError } from '../../../../domain/common/exceptions/SystemError';
 import { ICommandHandler } from '../../../../domain/common/usecases/interfaces/ICommandHandler';
 import { IBookRepository } from '../../../../repositories/book/IBookRepository';
 import { FindBookByNameOrAuthorQuery } from './FindBookByNameOrAuthorQuery';
 import { FindBookByNameOrAuthorQueryResult } from './FindBookByNameOrAuthorQueryResult';
 
 @Service()
-export class FindBookByNameOrAuthorQueryHandler
+export class FindBookByNameOrAuthorQueryHandle
     implements
         ICommandHandler<
             FindBookByNameOrAuthorQuery,
@@ -19,6 +21,12 @@ export class FindBookByNameOrAuthorQueryHandler
     async handle(
         param: FindBookByNameOrAuthorQuery,
     ): Promise<FindBookByNameOrAuthorQueryResult[]> {
+        if (param == null || (!param.author && !param.name)) {
+            throw new SystemError(
+                MessageError.PARAM_IS_REQUIRED,
+                'name and author',
+            );
+        }
         const books = await this._bookRepository.getByFilter(
             param.name,
             param.author,
