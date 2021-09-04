@@ -11,7 +11,10 @@ Container.set('user.repository', {
     async getByEmail() {},
 });
 Container.set('crypto.service', {
-    async checkStringToHash() {},
+    async compareHash() {},
+});
+Container.set('auth_jwt.service', {
+    async sign() {},
 });
 const userRepository = Container.get<IUserRepository>('user.repository');
 const cryptoService = Container.get<ICryptoService>('crypto.service');
@@ -25,12 +28,14 @@ describe('User - Login by Email', () => {
                 password: 'any',
             } as User),
         );
-        jest.spyOn(cryptoService, 'checkStringToHash').mockReturnValue(true);
+        jest.spyOn(cryptoService, 'compareHash').mockReturnValue(
+            Promise.resolve(true),
+        );
         const user = await loginByEmailQueryHandle.handle({
             email: 'any',
             password: 'any',
         });
-        expect(user).toEqual({ email: 'any' });
+        expect(user).toEqual({ token: undefined, userId: 'any' });
     });
     test('should return exception if password is wrong', async () => {
         jest.spyOn(userRepository, 'getByEmail').mockReturnValue(
@@ -40,7 +45,9 @@ describe('User - Login by Email', () => {
                 password: 'any',
             } as User),
         );
-        jest.spyOn(cryptoService, 'checkStringToHash').mockReturnValue(false);
+        jest.spyOn(cryptoService, 'compareHash').mockReturnValue(
+            Promise.resolve(false),
+        );
         const result = await loginByEmailQueryHandle
             .handle({
                 email: 'any',

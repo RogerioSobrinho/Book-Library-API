@@ -1,3 +1,5 @@
+import { MessageError } from '../common/exceptions/message/MessageError';
+import { SystemError } from '../common/exceptions/SystemError';
 import { IBook } from '../types/IBook';
 import { BaseEntity } from './BaseEntity';
 
@@ -68,6 +70,17 @@ export class Book extends BaseEntity<IBook> implements IBook {
 
     public set finishReadAt(value: Date) {
         this.data.finishReadAt = value;
+    }
+
+    get userId(): string {
+        return this.data.userId;
+    }
+
+    set userId(value: string) {
+        if (!value)
+            throw new SystemError(MessageError.PARAM_REQUIRED, 'userId');
+
+        this.data.userId = value;
     }
 
     /* Handlers */

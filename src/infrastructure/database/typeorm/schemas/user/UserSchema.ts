@@ -5,6 +5,7 @@ export const USER_SCHEMA = {
     COLUMNS: {
         ...BASE_SCHEMA.COLUMNS,
         ID: 'id',
+        ROLE: 'role',
         EMAIL: 'email',
         PASSWORD: 'password',
     },

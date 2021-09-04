@@ -45,6 +45,9 @@ export class BookDb extends BaseDbEntity<Book> implements IBook {
     @Column('date', { name: BOOK_SCHEMA.COLUMNS.FINISHREADAT, nullable: true })
     finishReadAt: Date;
 
+    @Column('uuid', { name: BOOK_SCHEMA.COLUMNS.USER_ID })
+    userId: string;
+
     toEntity(): Book {
         return new Book(this);
     }

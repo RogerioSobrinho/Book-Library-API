@@ -2,7 +2,7 @@ import { Inject, Service } from 'typedi';
 import { MessageError } from '../../../../domain/common/exceptions/message/MessageError';
 import { NoContentError } from '../../../../domain/common/exceptions/NoContentError';
 import { SystemError } from '../../../../domain/common/exceptions/SystemError';
-import { ICommandHandler } from '../../../../domain/common/usecases/interfaces/ICommandHandler';
+import { IQueryHandler } from '../../../../domain/common/usecases/interfaces/IQueryHandler';
 import { IBookRepository } from '../../../../repositories/book/IBookRepository';
 import { FindBookByNameOrAuthorQuery } from './FindBookByNameOrAuthorQuery';
 import { FindBookByNameOrAuthorQueryResult } from './FindBookByNameOrAuthorQueryResult';
@@ -10,7 +10,7 @@ import { FindBookByNameOrAuthorQueryResult } from './FindBookByNameOrAuthorQuery
 @Service()
 export class FindBookByNameOrAuthorQueryHandle
     implements
-        ICommandHandler<
+        IQueryHandler<
             FindBookByNameOrAuthorQuery,
             FindBookByNameOrAuthorQueryResult[]
         >

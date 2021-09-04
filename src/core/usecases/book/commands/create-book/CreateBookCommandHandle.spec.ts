@@ -19,6 +19,7 @@ describe('Book - Create a Book', () => {
     test('should create a book', async () => {
         const book: CreateBookCommand = {
             author: 'ANY',
+            userId: 'ANY',
             name: 'ANY',
         } as CreateBookCommand;
         jest.spyOn(bookRepository, 'createGet').mockReturnValue(
@@ -41,6 +42,7 @@ describe('Book - Create a Book', () => {
         jest.spyOn(bookRepository, 'createGet').mockReturnValue(null);
         const book: CreateBookCommand = {
             author: 'ANY',
+            userId: 'ANY',
             name: 'ANY',
         } as CreateBookCommand;
         const result = await createBookCommandHandle

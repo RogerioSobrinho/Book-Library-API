@@ -4,6 +4,7 @@ import { SystemError } from '../../../../domain/common/exceptions/SystemError';
 import { ICommandHandler } from '../../../../domain/common/usecases/interfaces/ICommandHandler';
 import { User } from '../../../../domain/entities/User';
 import { IUserRepository } from '../../../../repositories/user/IUserRepository';
+import { IAuthJwtService } from '../../../../services/auth/IAuthJwtService';
 import { ICryptoService } from '../../../../services/crypto/ICryptoService';
 import { CreateUserCommand } from './CreateUserCommand';
 import { CreateUserCommandResult } from './CreateUserCommandResult';
@@ -18,6 +19,9 @@ export class CreateUserCommandHandle
     @Inject('crypto.service')
     private readonly _cryptoService: ICryptoService;
 
+    @Inject('auth_jwt.service')
+    private readonly _authJWTService: IAuthJwtService;
+
     async handle(_param: CreateUserCommand): Promise<CreateUserCommandResult> {
         if (!_param || !_param.email || !_param.password) {
             throw new SystemError(
@@ -30,14 +34,13 @@ export class CreateUserCommandHandle
         if (isUser != null)
             throw new SystemError(MessageError.PARAM_EXISTED, 'email');
 
-        try {
-            const user = new User();
-            user.email = _param.email;
-            user.password = this._cryptoService.generateHash(_param.password);
-            const createdUser = await this._userRepository.createGet(user);
-            return { email: createdUser.email };
-        } catch (_) {
-            throw new SystemError(MessageError.DATA_CANNOT_SAVE);
-        }
+        const user = new User();
+        user.email = _param.email;
+        user.role = _param.role;
+        user.password = await this._cryptoService.generateHash(_param.password);
+        const createdUser = await this._userRepository.createGet(user);
+        const token = await this._authJWTService.sign(createdUser.id);
+
+        return new CreateUserCommandResult(token, createdUser.id);
     }
 }

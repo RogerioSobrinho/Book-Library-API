@@ -1,5 +1,6 @@
 import {
     Body,
+    HeaderParam,
     HttpCode,
     JsonController,
     Post,
@@ -7,6 +8,8 @@ import {
 } from 'routing-controllers';
 import { OpenAPI, ResponseSchema } from 'routing-controllers-openapi';
 import { Service } from 'typedi';
+import { GetUserAuthByJwtQuery } from '../../../core/usecases/user/queries/get-user-auth-by-jwt/GetUserAuthByJwtQuery';
+import { GetUserAuthByJwtQueryHandle } from '../../../core/usecases/user/queries/get-user-auth-by-jwt/GetUserAuthByJwtQueryHandler';
 import { LoginByEmailQuery } from '../../../core/usecases/user/queries/login-by-email/LoginByEmailQuery';
 import { LoginByEmailQueryHandle } from '../../../core/usecases/user/queries/login-by-email/LoginByEmailQueryHandle';
 import { LoginByEmailQueryResult } from '../../../core/usecases/user/queries/login-by-email/LoginByEmailQueryResult';
@@ -18,10 +21,20 @@ import { ErrorMiddleware } from '../../middlewares/ErrorMiddleware';
 export class AuthController {
     constructor(
         private readonly _loginByEmailQueryHandle: LoginByEmailQueryHandle,
+        private readonly _getUserAuthByJwtQueryHandler: GetUserAuthByJwtQueryHandle,
     ) {}
 
-    @HttpCode(200)
     @Post('/')
+    async authenticate(
+        @HeaderParam('authorization') authorization: string,
+    ): Promise<LoginByEmailQueryResult> {
+        const param = new GetUserAuthByJwtQuery();
+        param.token = authorization;
+        return await this._getUserAuthByJwtQueryHandler.handle(param);
+    }
+
+    @HttpCode(200)
+    @Post('/login')
     @OpenAPI({
         description: 'Auth',
     })

@@ -1,4 +1,4 @@
-export class CreateUserCommandResult {
+export class GetUserAuthByJwtQueryResult {
     token: string;
     userId: string;
 

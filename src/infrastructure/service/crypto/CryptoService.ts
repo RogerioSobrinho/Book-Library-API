@@ -1,14 +1,14 @@
 import { ICryptoService } from '../../../core/services/crypto/ICryptoService';
-import * as bcrypt from 'bcryptjs';
+import * as bcrypt from 'bcrypt';
 import { Service } from 'typedi';
 
 @Service('crypto.service')
 export class CryptoService implements ICryptoService {
-    generateHash(value: string): string {
-        return bcrypt.hashSync(value, 18);
+    generateHash(value: string): Promise<string> {
+        return bcrypt.hash(value, 18);
     }
 
-    checkStringToHash(value: string, hash: string): boolean {
-        return bcrypt.compareSync(value, hash);
+    compareHash(value: string, hash: string): Promise<boolean> {
+        return bcrypt.compare(value, hash);
     }
 }

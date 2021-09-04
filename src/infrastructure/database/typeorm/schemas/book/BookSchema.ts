@@ -5,6 +5,7 @@ export const BOOK_SCHEMA = {
     COLUMNS: {
         ...BASE_SCHEMA.COLUMNS,
         ID: 'id',
+        USER_ID: 'userId',
         NAME: 'name',
         DESCRIPTION: 'description',
         AUTHOR: 'author',

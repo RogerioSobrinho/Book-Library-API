@@ -1,7 +1,9 @@
 import {
+    Authorized,
     Body,
     Delete,
     Get,
+    HeaderParam,
     HttpCode,
     JsonController,
     Param,
@@ -13,6 +15,7 @@ import {
 } from 'routing-controllers';
 import { OpenAPI, ResponseSchema } from 'routing-controllers-openapi';
 import { Service } from 'typedi';
+import { RoleId } from '../../../core/domain/enums/role/RoleId';
 import { CreateBookCommand } from '../../../core/usecases/book/commands/create-book/CreateBookCommand';
 import { CreateBookCommandHandle } from '../../../core/usecases/book/commands/create-book/CreateBookCommandHandle';
 import { CreateBookCommandResult } from '../../../core/usecases/book/commands/create-book/CreateBookCommandResult';
@@ -27,6 +30,8 @@ import { FindBookByIdQueryResult } from '../../../core/usecases/book/queries/fin
 import { FindBookByNameOrAuthorQuery } from '../../../core/usecases/book/queries/find-book-by-name-or-author/FindBookByNameOrAuthorQuery';
 import { FindBookByNameOrAuthorQueryHandle } from '../../../core/usecases/book/queries/find-book-by-name-or-author/FindBookByNameOrAuthorQueryHandle';
 import { FindBookByNameOrAuthorQueryResult } from '../../../core/usecases/book/queries/find-book-by-name-or-author/FindBookByNameOrAuthorQueryResult';
+import { GetUserAuthByJwtQuery } from '../../../core/usecases/user/queries/get-user-auth-by-jwt/GetUserAuthByJwtQuery';
+import { GetUserAuthByJwtQueryHandle } from '../../../core/usecases/user/queries/get-user-auth-by-jwt/GetUserAuthByJwtQueryHandler';
 import { ErrorMiddleware } from '../../middlewares/ErrorMiddleware';
 
 @Service()
@@ -39,10 +44,12 @@ export class BookController {
         private readonly _findBookByIdQueryHandle: FindBookByIdQueryHandle,
         private readonly _findBookByNameOrAuthorQueryHandle: FindBookByNameOrAuthorQueryHandle,
         private readonly _deleteBookCommandHandle: DeleteBookCommandHandle,
+        private readonly _getUserAuthByJwtQueryHandle: GetUserAuthByJwtQueryHandle,
     ) {}
 
     @HttpCode(201)
     @Post('/')
+    @Authorized(RoleId.CLIENT)
     @OpenAPI({
         description: 'Create Book.',
         requestBody: {
@@ -55,13 +62,20 @@ export class BookController {
     })
     @ResponseSchema(CreateBookCommandResult)
     async create(
+        @HeaderParam('authorization') authorization: string,
         @Body() body: CreateBookCommand,
     ): Promise<CreateBookCommandResult> {
+        const param = new GetUserAuthByJwtQuery();
+        param.token = authorization;
+        body.userId = (
+            await this._getUserAuthByJwtQueryHandle.handle(param)
+        ).userId;
         const result = await this._createBookCommandHandle.handle(body);
         return result;
     }
 
     @Put('/:id([0-9a-f-]{36})')
+    @Authorized(RoleId.CLIENT)
     @OpenAPI({
         description: 'Update Book.',
     })
@@ -75,6 +89,7 @@ export class BookController {
     }
 
     @Get('/:id([0-9a-f-]{36})')
+    @Authorized(RoleId.CLIENT)
     @OpenAPI({
         description: 'Get Book by Id.',
     })
@@ -86,6 +101,7 @@ export class BookController {
     }
 
     @Get('/filter')
+    @Authorized(RoleId.CLIENT)
     @OpenAPI({
         description: 'Get Book by Author or Name.',
     })
@@ -99,6 +115,7 @@ export class BookController {
     }
 
     @Delete('/:id([0-9a-f-]{36})')
+    @Authorized(RoleId.CLIENT)
     @OpenAPI({
         description: 'Delete book.',
     })

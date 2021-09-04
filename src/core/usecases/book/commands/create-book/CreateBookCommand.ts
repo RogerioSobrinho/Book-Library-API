@@ -1,5 +1,6 @@
 export class CreateBookCommand {
     name: string;
+    userId: string;
     description: string | null;
     author: string;
     publishAt: Date | null;

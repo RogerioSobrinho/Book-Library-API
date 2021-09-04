@@ -11,7 +11,7 @@ export interface IJwtPayloadExtend extends IJwtPayload {
 }
 
 export interface IAuthJwtService {
-    sign(userId: string, roleId: string): string;
+    sign(userId: string): string;
 
     verify(token: string): IJwtPayloadExtend;
 }

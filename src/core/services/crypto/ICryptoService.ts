@@ -1,5 +1,5 @@
 export interface ICryptoService {
-    generateHash(value: string): string;
+    generateHash(value: string): Promise<string>;
 
-    checkStringToHash(value: string, hash: string): boolean;
+    compareHash(value: string, hash: string): Promise<boolean>;
 }

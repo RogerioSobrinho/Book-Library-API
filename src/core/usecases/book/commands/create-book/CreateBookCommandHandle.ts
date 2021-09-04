@@ -25,6 +25,7 @@ export class CreateBookCommandHandle
 
         const data = new Book();
         data.author = param.author;
+        data.userId = param.userId;
         data.description = param.description;
         data.language = param.language;
         data.name = param.name;
