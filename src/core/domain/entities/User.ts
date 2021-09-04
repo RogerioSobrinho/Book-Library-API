@@ -6,23 +6,27 @@ export class User extends BaseEntity<IUser> implements IUser {
         super(data);
     }
 
-    private _email: string;
+    public get id(): string {
+        return this.data.id;
+    }
+
+    public set id(value: string) {
+        this.data.id = value;
+    }
 
     public get email(): string {
-        return this._email;
+        return this.data.email;
     }
 
     public set email(value: string) {
-        this._email = value;
+        this.data.email = value;
     }
 
-    private _password: string;
-
     public get password(): string {
-        return this._password;
+        return this.data.password;
     }
 
     public set password(value: string) {
-        this._password = value;
+        this.data.password = value;
     }
 }

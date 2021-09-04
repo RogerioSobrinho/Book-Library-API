@@ -163,4 +163,9 @@ export class MessageError {
         ErrorCode.CONNECTION_ERROR,
         "Can't connect to database",
     );
+
+    static USER_NOT_FOUND = new ErrorObject(
+        ErrorCode.DATA_NOT_EXISTS,
+        'User not found!',
+    );
 }

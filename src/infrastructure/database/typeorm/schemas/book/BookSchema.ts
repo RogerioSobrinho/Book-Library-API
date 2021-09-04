@@ -1,7 +1,7 @@
 import { BASE_SCHEMA } from '../base/BaseSchema';
 
 export const BOOK_SCHEMA = {
-    TABLE_NAME: 'book',
+    TABLE_NAME: 'books',
     COLUMNS: {
         ...BASE_SCHEMA.COLUMNS,
         ID: 'id',

@@ -13,21 +13,21 @@ import {
 } from 'routing-controllers';
 import { OpenAPI, ResponseSchema } from 'routing-controllers-openapi';
 import { Service } from 'typedi';
-import { CreateBookCommand } from '../../core/usecases/book/commands/create-book/CreateBookCommand';
-import { CreateBookCommandHandle } from '../../core/usecases/book/commands/create-book/CreateBookCommandHandle';
-import { CreateBookCommandResult } from '../../core/usecases/book/commands/create-book/CreateBookCommandResult';
-import { DeleteBookCommand } from '../../core/usecases/book/commands/delete-book/DeleteBookCommand';
-import { DeleteBookCommandHandle } from '../../core/usecases/book/commands/delete-book/DeleteBookCommandHandle';
-import { UpdateBookCommand } from '../../core/usecases/book/commands/update-book/UpdateBookCommand';
-import { UpdateBookCommandHandle } from '../../core/usecases/book/commands/update-book/UpdateBookCommandHandle';
-import { UpdateBookCommandResult } from '../../core/usecases/book/commands/update-book/UpdateBookCommandResult';
-import { FindBookByIdQuery } from '../../core/usecases/book/queries/find-book-by-id/FindBookByIdQuery';
-import { FindBookByIdQueryHandle } from '../../core/usecases/book/queries/find-book-by-id/FindBookByIdQueryHandle';
-import { FindBookByIdQueryResult } from '../../core/usecases/book/queries/find-book-by-id/FindBookByIdQueryResult';
-import { FindBookByNameOrAuthorQuery } from '../../core/usecases/book/queries/find-book-by-name-or-author/FindBookByNameOrAuthorQuery';
-import { FindBookByNameOrAuthorQueryHandle } from '../../core/usecases/book/queries/find-book-by-name-or-author/FindBookByNameOrAuthorQueryHandle';
-import { FindBookByNameOrAuthorQueryResult } from '../../core/usecases/book/queries/find-book-by-name-or-author/FindBookByNameOrAuthorQueryResult';
-import { ErrorMiddleware } from '../middlewares/ErrorMiddleware';
+import { CreateBookCommand } from '../../../core/usecases/book/commands/create-book/CreateBookCommand';
+import { CreateBookCommandHandle } from '../../../core/usecases/book/commands/create-book/CreateBookCommandHandle';
+import { CreateBookCommandResult } from '../../../core/usecases/book/commands/create-book/CreateBookCommandResult';
+import { DeleteBookCommand } from '../../../core/usecases/book/commands/delete-book/DeleteBookCommand';
+import { DeleteBookCommandHandle } from '../../../core/usecases/book/commands/delete-book/DeleteBookCommandHandle';
+import { UpdateBookCommand } from '../../../core/usecases/book/commands/update-book/UpdateBookCommand';
+import { UpdateBookCommandHandle } from '../../../core/usecases/book/commands/update-book/UpdateBookCommandHandle';
+import { UpdateBookCommandResult } from '../../../core/usecases/book/commands/update-book/UpdateBookCommandResult';
+import { FindBookByIdQuery } from '../../../core/usecases/book/queries/find-book-by-id/FindBookByIdQuery';
+import { FindBookByIdQueryHandle } from '../../../core/usecases/book/queries/find-book-by-id/FindBookByIdQueryHandle';
+import { FindBookByIdQueryResult } from '../../../core/usecases/book/queries/find-book-by-id/FindBookByIdQueryResult';
+import { FindBookByNameOrAuthorQuery } from '../../../core/usecases/book/queries/find-book-by-name-or-author/FindBookByNameOrAuthorQuery';
+import { FindBookByNameOrAuthorQueryHandle } from '../../../core/usecases/book/queries/find-book-by-name-or-author/FindBookByNameOrAuthorQueryHandle';
+import { FindBookByNameOrAuthorQueryResult } from '../../../core/usecases/book/queries/find-book-by-name-or-author/FindBookByNameOrAuthorQueryResult';
+import { ErrorMiddleware } from '../../middlewares/ErrorMiddleware';
 
 @Service()
 @JsonController('/book')
