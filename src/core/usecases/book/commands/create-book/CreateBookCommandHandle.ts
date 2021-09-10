@@ -27,6 +27,7 @@ export class CreateBookCommandHandle
         data.author = param.author;
         data.userId = param.userId;
         data.description = param.description;
+        data.picture = param.picture;
         data.language = param.language;
         data.name = param.name;
         data.publishAt = param.publishAt;

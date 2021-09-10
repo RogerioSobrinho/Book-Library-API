@@ -24,6 +24,13 @@ export class BookDb extends BaseDbEntity<Book> implements IBook {
     description: string;
 
     @Column('varchar', {
+        name: BOOK_SCHEMA.COLUMNS.PICTURE,
+        length: 255,
+        nullable: true,
+    })
+    picture: string;
+
+    @Column('varchar', {
         name: BOOK_SCHEMA.COLUMNS.AUTHOR,
         length: 80,
     })

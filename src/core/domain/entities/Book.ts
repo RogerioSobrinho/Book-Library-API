@@ -32,6 +32,14 @@ export class Book extends BaseEntity<IBook> implements IBook {
         this.data.description = value;
     }
 
+    public get picture(): string {
+        return this.data.picture;
+    }
+
+    public set picture(value: string) {
+        this.data.picture = value;
+    }
+
     public get author(): string {
         return this.data.author;
     }

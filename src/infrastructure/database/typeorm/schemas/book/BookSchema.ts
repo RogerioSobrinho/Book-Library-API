@@ -8,6 +8,7 @@ export const BOOK_SCHEMA = {
         USER_ID: 'userId',
         NAME: 'name',
         DESCRIPTION: 'description',
+        PICTURE: 'picture',
         AUTHOR: 'author',
         PUBLISHAT: 'publish_at',
         LANGUAGE: 'language',

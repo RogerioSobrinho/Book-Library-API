@@ -26,6 +26,7 @@ export class UpdateBookCommandHandle
         const data = new Book();
         data.author = param.author;
         data.description = param.description;
+        data.picture = param.picture;
         data.language = param.language;
         data.name = param.name;
         data.publishAt = param.publishAt;

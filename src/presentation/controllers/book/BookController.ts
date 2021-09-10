@@ -11,10 +11,12 @@ import {
     Post,
     Put,
     QueryParams,
-    UseAfter,
+    Req,
+    UseBefore,
 } from 'routing-controllers';
 import { OpenAPI, ResponseSchema } from 'routing-controllers-openapi';
 import { Service } from 'typedi';
+import { Request } from 'express';
 import { RoleId } from '../../../core/domain/enums/role/RoleId';
 import { CreateBookCommand } from '../../../core/usecases/book/commands/create-book/CreateBookCommand';
 import { CreateBookCommandHandle } from '../../../core/usecases/book/commands/create-book/CreateBookCommandHandle';
@@ -32,11 +34,10 @@ import { FindBookByNameOrAuthorQueryHandle } from '../../../core/usecases/book/q
 import { FindBookByNameOrAuthorQueryResult } from '../../../core/usecases/book/queries/find-book-by-name-or-author/FindBookByNameOrAuthorQueryResult';
 import { GetUserAuthByJwtQuery } from '../../../core/usecases/user/queries/get-user-auth-by-jwt/GetUserAuthByJwtQuery';
 import { GetUserAuthByJwtQueryHandle } from '../../../core/usecases/user/queries/get-user-auth-by-jwt/GetUserAuthByJwtQueryHandler';
-import { ErrorMiddleware } from '../../middlewares/ErrorMiddleware';
+import { UploadPictureMiddleware } from '../../middlewares/UploadPictureMiddleware';
 
 @Service()
 @JsonController('/book')
-@UseAfter(ErrorMiddleware)
 export class BookController {
     constructor(
         private readonly _createBookCommandHandle: CreateBookCommandHandle,
@@ -52,21 +53,17 @@ export class BookController {
     @Authorized(RoleId.CLIENT)
     @OpenAPI({
         description: 'Create Book.',
-        requestBody: {
-            description: 'Book Object',
-            content: {
-                ['CreateBookCommand']: CreateBookCommand,
-            },
-            required: true,
-        },
     })
     @ResponseSchema(CreateBookCommandResult)
+    @UseBefore(UploadPictureMiddleware)
     async create(
         @HeaderParam('authorization') authorization: string,
         @Body() body: CreateBookCommand,
+        @Req() req: Request,
     ): Promise<CreateBookCommandResult> {
         const param = new GetUserAuthByJwtQuery();
         param.token = authorization;
+        body.picture = req.file?.filename || null;
         body.userId = (
             await this._getUserAuthByJwtQueryHandle.handle(param)
         ).userId;
@@ -79,11 +76,14 @@ export class BookController {
     @OpenAPI({
         description: 'Update Book.',
     })
+    @UseBefore(UploadPictureMiddleware)
     async update(
         @Param('id') id: string,
         @Body() body: UpdateBookCommand,
+        @Req() req: Request,
     ): Promise<UpdateBookCommandResult> {
         body.id = id;
+        body.picture = req.file?.filename || null;
         const result = await this._updateBookCommandHandle.handle(body);
         return result;
     }
