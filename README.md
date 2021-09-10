@@ -27,34 +27,15 @@
 -   Simple example of TypeScript code and unit test
 -   [typescript-boilerplate][typescript-boilerplate] my typescript template
 
-## Getting Started
+## Clean Architecture
 
-This project is intended to be used with the latest Active LTS release of [Node.js][nodejs].
+![Cleab Architecture](https://blog.cleancoder.com/uncle-bob/images/2012-08-13-the-clean-architecture/CleanArchitecture.jpg)
 
-### Clone repository
+### The Dependency Rule
 
-To clone the repository, use the following commands:
+> The overriding rule that makes this architecture work is The Dependency Rule. This rule says that source code dependencies can only point inwards. Nothing in an inner circle can know anything at all about something in an outer circle. In particular, the name of something declared in an outer circle must not be mentioned by the code in the an inner circle. That includes, functions, classes. variables, or any other named software entity.
 
-```sh
-git clone https://github.com/RogerioSobrinho/Book-Library-API.git
-cd Book-Library-API
-npm i
-```
-
-## Available Scripts
-
--   `start` - run transpile files
--   `start:watch` - start a node server, similar to nodemon but for TypeScript
--   `prebuild` - remove transpiled files
--   `build` - transpile TypeScript to ES6
--   `format` - apply prettier formatter to all files
--   `lint` - lint source files and tests
--   `lint:fix` - apply lint source files and tests
--   `prepare` - install husky config
--   `test` - run tests
--   `test:coverage` - run tests with coverage report
--   `test:watch` - interactive watch mode to automatically re-run tests
--   `release` - to have a changelog
+Extracted from https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html#the-dependency-rule
 
 ## Directory Structure
 
@@ -123,6 +104,58 @@ npm i
         │   ├── book
         │   └── user
         └── middlewares
+```
+
+## Getting Started
+
+This project is intended to be used with the latest Active LTS release of [Node.js][nodejs].
+
+### Clone repository
+
+To clone the repository, use the following commands:
+
+```sh
+git clone https://github.com/RogerioSobrinho/Book-Library-API.git
+cd Book-Library-API
+npm i
+```
+
+## Available Scripts
+
+-   `start` - run transpile files
+-   `start:watch` - start a node server, similar to nodemon but for TypeScript
+-   `prebuild` - remove transpiled files
+-   `build` - transpile TypeScript to ES6
+-   `format` - apply prettier formatter to all files
+-   `lint` - lint source files and tests
+-   `lint:fix` - apply lint source files and tests
+-   `prepare` - install husky config
+-   `test` - run tests
+-   `test:coverage` - run tests with coverage report
+-   `test:watch` - interactive watch mode to automatically re-run tests
+-   `release` - to have a changelog
+
+## Running
+
+```sh
+docker-composer up
+npm run start:dev
+```
+
+You should get
+
+```sh
+        ################################################
+            🏁  Server listening at:  http://localhost:3000  🏁
+        ################################################
+```
+
+Access http://localhost:3000/docs/
+
+## Testing
+
+```sh
+npm run test:verbose
 ```
 
 ## License

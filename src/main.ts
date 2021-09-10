@@ -1,6 +1,6 @@
 import './infrastructure/SingletonRegister';
 import Container from 'typedi';
-import { API_PORT } from './config/Configuration';
+import { API_PORT, DOMAIN, PROTOTYPE } from './config/Configuration';
 import { IDbContext } from './core/domain/common/database/interfaces/IDbContext';
 import { ApiService } from './presentation/ApiService';
 
@@ -12,9 +12,10 @@ const startApplication = async () => {
 };
 startApplication()
     .then(() => {
-        console.info(
-            `Server started at \x1b[32m http://localhost:${API_PORT} \x1b[0m`,
-        );
+        console.log(`
+        ################################################
+            🏁  Server listening at: \x1b[32m ${PROTOTYPE}://${DOMAIN}:${API_PORT} \x1b[0m 🏁
+        ################################################`);
     })
     .catch(() => {
         dbContext.destroyConnection();
