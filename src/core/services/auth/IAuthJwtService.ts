@@ -7,7 +7,7 @@ export interface IJwtPayload {
 }
 
 export interface IJwtPayloadExtend extends IJwtPayload {
-    roleId: string;
+    userId: string;
 }
 
 export interface IAuthJwtService {
