@@ -25,7 +25,7 @@
 -   [pg][pg] is Non-blocking PostgreSQL client for Node.js
 -   .editorconfig for consistent file format
 -   Simple example of TypeScript code and unit test
--   [typescript-boilerplate][typescript-boilerplate] my typescript template
+-   [typescript-boilerplate][typescript-boilerplate] is my typescript template
 
 ## Clean Architecture
 
@@ -157,6 +157,12 @@ Access http://localhost:3000/docs/
 ```sh
 npm run test:verbose
 ```
+
+## Support the development
+
+Do you like this project? Support it by donating
+
+<a href="https://www.buymeacoffee.com/rogeriosobrinho"> <img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" height="50" width="210" alt="rogeriosobrinho" /></a>
 
 ## License
 
