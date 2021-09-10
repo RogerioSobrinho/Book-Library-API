@@ -1,4 +1,4 @@
-# API - Book Library
+<h1 align="center">Welcome to Book Library API 👋</h1>
 
 [![TypeScript version][ts-badge]][typescript-4-3]
 [![Node.js version][nodejs-badge]][nodejs]
