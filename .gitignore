@@ -30,6 +30,7 @@ dist/
 
 # dotenv environment
 .env
+database.env
 
 # upload files (temp)
 books-picture
