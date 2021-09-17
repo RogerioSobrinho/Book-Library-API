@@ -8,6 +8,7 @@ COPY . .
 
 # Install all Packages and build app
 RUN npm install --quiet && \
+    npm run test:coverage && \
     npm run build
 
 # If you are building your code for production
