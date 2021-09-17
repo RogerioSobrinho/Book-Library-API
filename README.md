@@ -139,7 +139,6 @@ npm i
 
 ```sh
 docker-composer up
-npm run start:dev
 ```
 
 You should get
