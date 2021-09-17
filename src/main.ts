@@ -17,7 +17,7 @@ startApplication()
             🏁  Server listening at: \x1b[32m ${PROTOTYPE}://${DOMAIN}:${API_PORT} \x1b[0m 🏁
         ################################################`);
     })
-    .catch(() => {
+    .catch(error => {
+        console.error(error);
         dbContext.destroyConnection();
-        setTimeout(() => process.exit(), 2000);
     });
