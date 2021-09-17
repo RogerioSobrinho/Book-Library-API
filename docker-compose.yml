@@ -1,11 +1,29 @@
 # docker-compose.yml
 version: '3'
 services:
-  database:
-    image: 'postgres' # use latest official postgres version
-    env_file:
-      - database.env # configure postgres
-    volumes:
-      - /private/var/lib/postgresql:/var/lib/postgresql # persist data even if container shuts downvolumes:
-    ports:
-      - '5432:5432'
+    api:
+        restart: always
+        container_name: booklibrary-api
+        # volumes:
+        #     - .:/usr/src/app/
+        #     - /usr/src/app/node_modules
+        environment:
+            DB_HOST: db
+        build:
+            context: .
+            dockerfile: dockerfile
+        ports:
+            - 3000:3000
+        depends_on:
+            - db
+    db:
+        container_name: booklibrary-db
+        image: 'postgres'
+        environment:
+            POSTGRES_USER: user
+            POSTGRES_PASSWORD: magical_password
+            POSTGRES_DB: book_database
+        volumes:
+            - /private/var/lib/postgresql:/var/lib/postgresql
+        ports:
+            - '5432:5432'
