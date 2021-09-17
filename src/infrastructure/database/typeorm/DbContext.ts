@@ -25,13 +25,14 @@ export class DbContext implements IDbContext {
     async createConnection(connectionName?: string): Promise<Connection> {
         let connection: Connection | null = null;
         try {
-            connection = getConnection(connectionName);
+            connection = this.getConnection(connectionName);
             // eslint-disable-next-line no-empty
         } catch {}
         if (connection && connection.isConnected) return connection;
         connection = await createConnection({ ...config, name: connectionName })
             .then(connection => connection)
-            .catch(() => {
+            .catch(error => {
+                console.error(error);
                 throw new SystemError(MessageError.CONNECTION_ERROR);
             });
         return connection;
@@ -40,7 +41,7 @@ export class DbContext implements IDbContext {
     async destroyConnection(connectionName?: string): Promise<void> {
         let connection: Connection | null = null;
         try {
-            connection = getConnection(connectionName);
+            connection = this.getConnection(connectionName);
             // eslint-disable-next-line no-empty
         } catch {}
         if (connection && connection.isConnected) await connection.close();
