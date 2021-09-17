@@ -23,7 +23,7 @@ export class GetUserAuthByJwtQueryHandle
         let payload;
         try {
             payload = this._authJwtService.verify(param.token);
-        } catch (error) {
+        } catch (error: any) {
             if (error.name === 'TokenExpiredError') {
                 throw new UnauthorizedError(
                     MessageError.PARAM_EXPIRED,
