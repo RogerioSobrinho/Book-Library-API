@@ -2,7 +2,7 @@ language: node_js
 node_js:
     - 14
 script:
-    - eslint 'src/**'
+    - npm run lint
     - npm run test:coverage
 deploy:
     provider: heroku
@@ -10,4 +10,5 @@ deploy:
         secure: ${{ secrets.HEROKU_API_KEY }}
     app: Book-Library-API
     on:
+        branch: main
         repo: RogerioSobrinho/Book-Library-API
